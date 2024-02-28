@@ -33,10 +33,14 @@ func retreiveAndMarkRevokedCerts() {
 	if err != nil {
 		log.Fatalln("Error looking up in the DB: ", err)
 	}
+	log.Println("Marking as revoked: ", serialsToIds)
 	apiurl := os.Getenv("API_URL")
 	user := os.Getenv("API_USER")
 	key := os.Getenv("API_KEY")
-	vtigerapi.UpdateCertificatesViaAPI(apiurl, user, key, serialsToIds, revokedWithDates)
+	err = vtigerapi.UpdateCertificatesViaAPI(apiurl, user, key, serialsToIds, revokedWithDates)
+	if err != nil {
+		log.Fatalln("Error updating records via API: ", err)
+	}
 }
 
 func main() {

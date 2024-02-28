@@ -28,7 +28,7 @@ func LookupIdsBySerials(connstring string, serials []string) (map[string]int, er
 	sql := fmt.Sprintf(`SELECT 
 						certificatesid AS id, LOWER(certificate_serial) AS serial 
 						FROM vtiger_certificates 
-						WHERE cert_revoked=0 AND LOWER(certificate_serial) IN (%s)`,
+						WHERE COALESCE(cert_revoked, 0) = 0 AND LOWER(certificate_serial) IN (%s)`,
 		questionMarksJoined)
 
 	results, err := db.Query(sql, params...)
