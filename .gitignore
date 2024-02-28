@@ -22,3 +22,6 @@ go.work
 
 # env files
 .env
+
+# binary
+load_revoked
