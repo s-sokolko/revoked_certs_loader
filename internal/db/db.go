@@ -72,5 +72,9 @@ func performChunkedQuery(db *sql.DB, serials []string) (map[string]int, error) {
 		}
 		serialToIds[serial] = id
 	}
+	err = results.Close()
+	if err != nil {
+		log.Println("Error closing dataset ", err)
+	}
 	return serialToIds, nil
 }
